@@ -1,0 +1,36 @@
+# Core measurement backend
+flask>=2.0.0
+flask-cors>=3.0.10
+numpy>=1.24
+opencv-python-headless>=4.8
+Pillow>=10.0
+
+# --- Depth estimation (MiDaS, loaded via torch.hub) ---
+#
+# IMPORTANT for free-tier / memory-constrained deployment:
+# The default PyPI `torch` wheel bundles full CUDA support and is
+# 500MB+ even though this app only ever runs on CPU (see DEVICE in
+# measure_server.py - it only uses CUDA if available, never requires
+# it). That CUDA bloat is usually what blows past a free host's
+# build-size or disk limit, not the model itself.
+#
+# To install the CPU-only build instead (typically 150-200MB), either:
+#   1. Uncomment the --extra-index-url line below, or
+#   2. Run: pip install torch --index-url https://download.pytorch.org/whl/cpu
+#      before `pip install -r requirements.txt` (and remove torch from
+#      this file temporarily so it isn't reinstalled from the default
+#      index afterward).
+#
+# Some hosts (Render, Railway, etc.) read requirements.txt directly, so
+# option 1 is usually the more portable choice for a one-click deploy.
+# --extra-index-url https://download.pytorch.org/whl/cpu
+torch>=2.0
+torchvision>=0.15
+timm>=0.9
+
+# Dev / testing only - not required to run the server
+pytest>=7.4
+
+# Note: setup_midas.py (optional but recommended - see that script's
+# docstring) requires the `git` CLI to be installed on the system.
+# This is not a pip package and won't be installed by this file.

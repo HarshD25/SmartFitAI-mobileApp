@@ -1,0 +1,17 @@
+# Node
+node_modules/
+npm-debug.log*
+
+# Python
+venv/
+__pycache__/
+*.pyc
+.pytest_cache/
+measure-backend/vendor/
+
+# OS / editor
+.DS_Store
+*.swp
+
+# Logs
+*.log

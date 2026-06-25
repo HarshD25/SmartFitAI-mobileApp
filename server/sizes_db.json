@@ -1,0 +1,160 @@
+{
+  "male": {
+    "topwear": {
+      "shirt": [
+        {"alpha":"38","numeric":38,"chest":96,"waist":82},
+        {"alpha":"40","numeric":40,"chest":100,"waist":86},
+        {"alpha":"42","numeric":42,"chest":104,"waist":90},
+        {"alpha":"44","numeric":44,"chest":108,"waist":94},
+        {"alpha":"46","numeric":46,"chest":112,"waist":98}
+      ],
+      "tshirt": [
+        {"alpha":"S","numeric":36,"chest":90,"waist":78},
+        {"alpha":"M","numeric":38,"chest":96,"waist":84},
+        {"alpha":"L","numeric":40,"chest":102,"waist":90},
+        {"alpha":"XL","numeric":42,"chest":108,"waist":96}
+      ],
+      "jacket": [
+        {"alpha":"S","numeric":38,"chest":98,"waist":86},
+        {"alpha":"M","numeric":40,"chest":104,"waist":92},
+        {"alpha":"L","numeric":42,"chest":110,"waist":98},
+        {"alpha":"XL","numeric":44,"chest":116,"waist":104}
+      ],
+      "blazer": [
+        {"alpha":"38","numeric":38,"chest":96,"waist":84},
+        {"alpha":"40","numeric":40,"chest":100,"waist":88},
+        {"alpha":"42","numeric":42,"chest":104,"waist":92},
+        {"alpha":"44","numeric":44,"chest":108,"waist":96}
+      ],
+      "sweater": [
+        {"alpha":"S","numeric":36,"chest":92,"waist":80},
+        {"alpha":"M","numeric":38,"chest":98,"waist":86},
+        {"alpha":"L","numeric":40,"chest":104,"waist":92},
+        {"alpha":"XL","numeric":42,"chest":110,"waist":98}
+      ],
+      "tracksuit": [
+        {"alpha":"S","numeric":36,"chest":94,"waist":82},
+        {"alpha":"M","numeric":38,"chest":100,"waist":88},
+        {"alpha":"L","numeric":40,"chest":106,"waist":94},
+        {"alpha":"XL","numeric":42,"chest":112,"waist":100}
+      ],
+      "trackjacket": [
+        {"alpha":"S","numeric":36,"chest":92,"waist":80},
+        {"alpha":"M","numeric":38,"chest":98,"waist":86},
+        {"alpha":"L","numeric":40,"chest":104,"waist":92},
+        {"alpha":"XL","numeric":42,"chest":110,"waist":98}
+      ]
+    },
+    "bottomwear": {
+      "jeans": [
+        {"alpha":"28","numeric":28,"waist":71,"hip":90},
+        {"alpha":"30","numeric":30,"waist":76,"hip":94},
+        {"alpha":"32","numeric":32,"waist":81,"hip":98},
+        {"alpha":"34","numeric":34,"waist":86,"hip":102},
+        {"alpha":"36","numeric":36,"waist":91,"hip":106}
+      ],
+      "chinos": [
+        {"alpha":"28","numeric":28,"waist":72,"hip":92},
+        {"alpha":"30","numeric":30,"waist":77,"hip":96},
+        {"alpha":"32","numeric":32,"waist":82,"hip":100},
+        {"alpha":"34","numeric":34,"waist":87,"hip":104},
+        {"alpha":"36","numeric":36,"waist":92,"hip":108}
+      ]
+    }
+  },
+  "female": {
+    "topwear": {
+      "tshirt": [
+        {"alpha":"XS","numeric":32,"chest":80,"waist":64,"hip":88},
+        {"alpha":"S","numeric":34,"chest":84,"waist":68,"hip":92},
+        {"alpha":"M","numeric":36,"chest":88,"waist":72,"hip":96},
+        {"alpha":"L","numeric":38,"chest":96,"waist":80,"hip":104}
+      ],
+      "dress": [
+        {"alpha":"XS","numeric":32,"chest":82,"waist":66,"hip":90},
+        {"alpha":"S","numeric":34,"chest":86,"waist":70,"hip":94},
+        {"alpha":"M","numeric":36,"chest":90,"waist":74,"hip":98},
+        {"alpha":"L","numeric":38,"chest":98,"waist":82,"hip":106}
+      ],
+      "jacket": [
+        {"alpha":"XS","numeric":32,"chest":84,"waist":68,"hip":92},
+        {"alpha":"S","numeric":34,"chest":88,"waist":72,"hip":96},
+        {"alpha":"M","numeric":36,"chest":92,"waist":76,"hip":100},
+        {"alpha":"L","numeric":38,"chest":100,"waist":84,"hip":108}
+      ],
+      "blazer": [
+        {"alpha":"XS","numeric":32,"chest":82,"waist":66,"hip":90},
+        {"alpha":"S","numeric":34,"chest":86,"waist":70,"hip":94},
+        {"alpha":"M","numeric":36,"chest":90,"waist":74,"hip":98},
+        {"alpha":"L","numeric":38,"chest":98,"waist":82,"hip":106}
+      ],
+      "sweater": [
+        {"alpha":"XS","numeric":32,"chest":83,"waist":67,"hip":91},
+        {"alpha":"S","numeric":34,"chest":87,"waist":71,"hip":95},
+        {"alpha":"M","numeric":36,"chest":91,"waist":75,"hip":99},
+        {"alpha":"L","numeric":38,"chest":99,"waist":83,"hip":107}
+      ],
+      "tracksuit": [
+        {"alpha":"XS","numeric":32,"chest":81,"waist":65,"hip":89},
+        {"alpha":"S","numeric":34,"chest":85,"waist":69,"hip":93},
+        {"alpha":"M","numeric":36,"chest":89,"waist":73,"hip":97},
+        {"alpha":"L","numeric":38,"chest":97,"waist":81,"hip":105}
+      ],
+      "trackjacket": [
+        {"alpha":"XS","numeric":32,"chest":81,"waist":65,"hip":89},
+        {"alpha":"S","numeric":34,"chest":85,"waist":69,"hip":93},
+        {"alpha":"M","numeric":36,"chest":89,"waist":73,"hip":97},
+        {"alpha":"L","numeric":38,"chest":97,"waist":81,"hip":105}
+      ],
+      "sportsbra": [
+        {"alpha":"XS","numeric":32,"chest":76,"waist":62,"hip":86},
+        {"alpha":"S","numeric":34,"chest":80,"waist":66,"hip":90},
+        {"alpha":"M","numeric":36,"chest":84,"waist":70,"hip":94},
+        {"alpha":"L","numeric":38,"chest":90,"waist":76,"hip":100}
+      ],
+      "saree": [
+        {"alpha":"XS","numeric":32,"chest":80,"waist":64,"hip":88},
+        {"alpha":"S","numeric":34,"chest":84,"waist":68,"hip":92},
+        {"alpha":"M","numeric":36,"chest":88,"waist":72,"hip":96},
+        {"alpha":"L","numeric":38,"chest":96,"waist":80,"hip":104}
+      ],
+      "lehenga": [
+        {"alpha":"XS","numeric":32,"chest":82,"waist":66,"hip":92},
+        {"alpha":"S","numeric":34,"chest":86,"waist":70,"hip":96},
+        {"alpha":"M","numeric":36,"chest":90,"waist":74,"hip":100},
+        {"alpha":"L","numeric":38,"chest":98,"waist":82,"hip":108}
+      ]
+    },
+    "bottomwear": {
+      "jeans": [
+        {"alpha":"S","numeric":26,"waist":66,"hip":88},
+        {"alpha":"M","numeric":28,"waist":71,"hip":92},
+        {"alpha":"L","numeric":30,"waist":76,"hip":96}
+      ],
+      "chinos": [
+        {"alpha":"S","numeric":26,"waist":67,"hip":90},
+        {"alpha":"M","numeric":28,"waist":72,"hip":94},
+        {"alpha":"L","numeric":30,"waist":77,"hip":98}
+      ],
+      "tights": [
+        {"alpha":"XS","numeric":24,"waist":62,"hip":84},
+        {"alpha":"S","numeric":26,"waist":66,"hip":88},
+        {"alpha":"M","numeric":28,"waist":71,"hip":92},
+        {"alpha":"L","numeric":30,"waist":76,"hip":96}
+      ]
+    }
+  },
+  "brands": {
+    "h&m": {"scale":1},
+    "zara": {"scale":1},
+    "levi's": {"scale":1},
+    "peter england": {"scale":1},
+    "nike": {"scale":1},
+    "adidas": {"scale":1},
+    "puma": {"scale":1},
+    "decathlon": {"scale":1},
+    "marks & spencer": {"scale":1},
+    "forever 21": {"scale":1},
+    "fabindia": {"scale":1}
+  }
+}

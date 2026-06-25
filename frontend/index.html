@@ -1,0 +1,236 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width,initial-scale=1" />
+<title>SmartFitAI — Your size, found in seconds</title>
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@400;500;600;700&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+
+<!-- MediaPipe Pose & Camera Utils (CDN) -->
+<script src="https://cdn.jsdelivr.net/npm/@mediapipe/pose@0.5/pose.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@mediapipe/camera_utils/camera_utils.js"></script>
+
+<link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+
+<div id="welcomeScreen" class="welcome">
+  <div class="welcome-blobs" aria-hidden="true">
+    <span class="blob blob-coral"></span>
+    <span class="blob blob-mint"></span>
+    <span class="blob blob-marigold"></span>
+  </div>
+
+  <div class="welcome-inner">
+    <div class="mascot" aria-hidden="true">
+      <svg viewBox="0 0 160 200" width="120" height="150">
+        <ellipse cx="80" cy="178" rx="34" ry="8" fill="#2D2A6E" opacity="0.08"/>
+        <g class="mascot-bob">
+          <path class="mascot-tape-tail" d="M80 70 C40 80, 18 60, 26 30 C30 16, 46 10, 56 18" fill="none" stroke="#FF6F59" stroke-width="14" stroke-linecap="round"/>
+          <circle cx="56" cy="18" r="9" fill="#2D2A6E"/>
+          <circle cx="80" cy="100" r="58" fill="#FFC857"/>
+          <circle cx="80" cy="100" r="58" fill="none" stroke="#2D2A6E" stroke-width="4"/>
+          <circle cx="80" cy="100" r="40" fill="#FFFBF5"/>
+          <path d="M80 60 v10 M80 130 v10 M40 100 h10 M110 100 h10 M52 72 l7 7 M101 121 l7 7 M108 72 l-7 7 M59 121 l-7 7" stroke="#2D2A6E" stroke-width="3" stroke-linecap="round"/>
+          <circle cx="80" cy="100" r="5" fill="#FF6F59"/>
+          <circle cx="60" cy="92" r="6" fill="#2D2A6E"/>
+          <circle cx="100" cy="92" r="6" fill="#2D2A6E"/>
+          <path d="M64 114 Q80 124 96 114" fill="none" stroke="#2D2A6E" stroke-width="4" stroke-linecap="round"/>
+          <circle cx="44" cy="100" r="9" fill="#FFC857" stroke="#2D2A6E" stroke-width="3"/>
+          <circle cx="116" cy="100" r="9" fill="#FFC857" stroke="#2D2A6E" stroke-width="3"/>
+        </g>
+      </svg>
+    </div>
+
+    <p class="welcome-eyebrow">Hey there 👋</p>
+    <h1>Smart<span class="accent">Fit</span>AI</h1>
+    <p class="welcome-sub">Stand in front of your camera for a few seconds. We'll figure out your measurements and find the size that actually fits — no tape measure, no guessing.</p>
+    <button id="getStartedBtn" class="btn-primary btn-lg" aria-label="Get Started">
+      <span>Let's find my size</span>
+      <svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true"><path d="M5 12h13M13 6l6 6-6 6" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+    </button>
+    <p class="welcome-foot">Takes about 30 seconds · Just needs your webcam</p>
+  </div>
+</div>
+
+<div class="card" id="appCard" aria-label="SmartFitAI App">
+  <header class="card-header">
+    <span class="card-mark" aria-hidden="true">
+      <svg viewBox="0 0 40 40" width="26" height="26">
+        <circle cx="20" cy="20" r="18" fill="#FFC857" stroke="#2D2A6E" stroke-width="3"/>
+        <circle cx="20" cy="20" r="6" fill="#FF6F59"/>
+      </svg>
+    </span>
+    <span class="card-title">SmartFitAI</span>
+    <ol class="steps" aria-label="Progress">
+      <li id="dot1" class="step-dot on"><span>Details</span></li>
+      <li id="dot2" class="step-dot"><span>Scan</span></li>
+      <li id="dot3" class="step-dot"><span>Fit</span></li>
+    </ol>
+  </header>
+
+  <section id="step1" class="step active" aria-label="Selection form">
+    <div class="center">
+      <span class="section-badge">Step 1</span>
+      <h2 class="section-title">Tell us a little about you</h2>
+      <p class="section-sub">Your height helps us nail the scale — it's the single biggest accuracy boost we can get.</p>
+
+      <div class="field">
+        <label for="height">Height <span class="field-optional">optional, but recommended</span></label>
+        <div class="input-suffix">
+          <input id="height" type="number" placeholder="170" inputmode="numeric" min="120" max="230" />
+          <span class="suffix">cm</span>
+        </div>
+      </div>
+
+      <div class="field">
+        <label for="gender">Gender</label>
+        <select id="gender" aria-label="Gender">
+          <option value="">Select</option>
+          <option value="male">Male</option>
+          <option value="female">Female</option>
+        </select>
+      </div>
+
+      <div class="field-row">
+        <div class="field">
+          <label for="category">Category</label>
+          <select id="category" aria-label="Category">
+            <option value="">Select</option>
+            <option value="topwear">Topwear</option>
+            <option value="bottomwear">Bottomwear</option>
+            <option value="ethnic">Ethnic</option>
+            <option value="outerwear">Outerwear</option>
+            <option value="activewear">Activewear</option>
+            <option value="others">Others</option>
+          </select>
+        </div>
+
+        <div class="field">
+          <label for="item">Item</label>
+          <select id="item" aria-label="Clothing Item">
+            <option value="">Pick category first</option>
+          </select>
+        </div>
+      </div>
+
+      <div class="field">
+        <label for="brand">Brand</label>
+        <select id="brand" aria-label="Brand">
+          <option value="">Select brand</option>
+          <optgroup label="Indian">
+            <option>Peter England</option>
+            <option>Allen Solly</option>
+            <option>Van Heusen</option>
+            <option>Raymond</option>
+            <option>Mufti</option>
+            <option>Number 1</option>
+            <option>Fabindia</option>
+          </optgroup>
+
+          <optgroup label="Imported / Global">
+            <option>Zara</option>
+            <option>H&amp;M</option>
+            <option>Levi's</option>
+            <option>Uniqlo</option>
+            <option>Marks &amp; Spencer</option>
+            <option>Forever 21</option>
+          </optgroup>
+
+          <optgroup label="Sportswear">
+            <option>Nike</option>
+            <option>Adidas</option>
+            <option>Puma</option>
+            <option>Decathlon</option>
+          </optgroup>
+
+          <optgroup label="Premium">
+            <option>Armani</option>
+            <option>Ralph Lauren</option>
+          </optgroup>
+        </select>
+      </div>
+
+      <div class="row actions">
+        <button id="nextToCamera" class="btn-primary btn-block">
+          <span>Continue to camera</span>
+          <svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true"><path d="M5 12h13M13 6l6 6-6 6" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </button>
+      </div>
+    </div>
+  </section>
+
+  <section id="step2" class="step" aria-label="Camera scan">
+    <div class="center">
+      <span class="section-badge">Step 2</span>
+      <h2 class="section-title">Strike a pose!</h2>
+
+      <div class="camera-frame" style="position:relative">
+        <div class="loader" id="loader" title="loading"></div>
+        <video id="camera" autoplay playsinline muted></video>
+        <canvas id="overlay"></canvas>
+
+        <svg class="ghost" id="ghostMale" viewBox="0 0 200 500" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+          <path d="M100 35 c-12 0 -20 10 -20 22 v20 c-18 12 -24 30 -24 48 v70 c0 40 20 90 44 120 c24 -30 44 -80 44 -120 v-70 c0 -18 -6 -36 -24 -48 v-20 c0 -12 -8 -22 -20 -22z"
+                fill="none" stroke="currentColor" stroke-width="3" stroke-dasharray="2 10" stroke-linecap="round"/>
+        </svg>
+        <svg class="ghost" id="ghostFemale" viewBox="0 0 200 500" xmlns="http://www.w3.org/2000/svg" aria-hidden="true" style="display:none">
+          <path d="M100 35 c-12 0 -20 10 -20 22 v18 c-16 10 -22 26 -22 42 c0 14 6 24 14 30 c-12 10 -18 22 -18 36 v18 c0 16 8 28 18 34 c-22 32 -36 78 -36 110 c0 40 20 90 44 120 c24 -30 44 -80 44 -120 c0 -32 -14 -78 -36 -110 c10 -6 18 -18 18 -34 v-18 c0 -14 -6 -26 -18 -36 c8 -6 14 -16 14 -30 c0 -16 -6 -32 -22 -42 v-18 c0 -12 -8 -22 -20 -22z"
+                fill="none" stroke="currentColor" stroke-width="3" stroke-dasharray="2 10" stroke-linecap="round"/>
+        </svg>
+
+        <div id="positionGuide"></div>
+        <div class="corner-tick tl" aria-hidden="true"></div>
+        <div class="corner-tick tr" aria-hidden="true"></div>
+        <div class="corner-tick bl" aria-hidden="true"></div>
+        <div class="corner-tick br" aria-hidden="true"></div>
+        <div class="subtitle" id="subtitle"></div>
+        <div class="status" id="status">Waking up the camera…</div>
+      </div>
+
+      <div class="row actions">
+        <button id="cancelScan" class="btn-ghost">Cancel</button>
+      </div>
+      <div class="small-note">Step back so your whole body fits in the dashed outline. A bit of front-facing light helps a lot!</div>
+    </div>
+  </section>
+
+  <section id="step3" class="step" aria-label="Results">
+    <div class="results">
+      <span class="section-badge section-badge-mint">All done! 🎉</span>
+
+      <div class="result-top">
+        <div class="result-chip">
+          <div class="k">Brand</div>
+          <div id="resBrand" class="v">—</div>
+        </div>
+        <div class="result-chip">
+          <div class="k">Item</div>
+          <div id="resItem" class="v">—</div>
+        </div>
+      </div>
+
+      <div class="size-card">
+        <span class="size-card-label">Your size</span>
+        <div id="resSize" class="size-display">—</div>
+        <div id="resFit" class="fit-text">—</div>
+      </div>
+
+      <div id="resultsViz" class="results-viz" aria-label="Measurement and size range visualization"></div>
+
+      <div class="row actions">
+        <button id="scanAgain" class="btn-ghost">Scan again</button>
+        <button id="goHome" class="btn-primary">Done</button>
+      </div>
+      <div class="small-note" id="measSummary"></div>
+    </div>
+  </section>
+
+</div>
+
+<script type="module" src="src/app.js"></script>
+</body>
+</html>

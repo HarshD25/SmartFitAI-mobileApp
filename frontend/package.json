@@ -1,0 +1,13 @@
+{
+  "name": "smartfit-frontend",
+  "version": "1.0.0",
+  "private": true,
+  "type": "module",
+  "description": "Static vanilla-JS frontend for SmartFitAI. No build step - served directly by server/server.js. This package.json exists only to run the unit test suite for the pure logic in src/scanEngine.js and src/resultsViz.js (jsdom provides a minimal DOM for the latter's SVG/div construction - no native canvas dependency needed since no canvas drawing is tested here).",
+  "scripts": {
+    "test": "node --test test/*.test.js"
+  },
+  "devDependencies": {
+    "jsdom": "^29.1.1"
+  }
+}
