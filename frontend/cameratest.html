@@ -2,8 +2,8 @@
 <html>
 <head><meta name="viewport" content="width=device-width,initial-scale=1"><title>Camera Test</title></head>
 <body style="font-family:sans-serif;padding:20px;text-align:center;">
-<h2>Back Camera Test</h2>
-<button onclick="testCam()" style="font-size:18px;padding:14px 24px;">Test Back Camera</button>
+<h2>Back Camera Test 2</h2>
+<button onclick="testCam()" style="font-size:18px;padding:14px 24px;">Test With Resolution</button>
 <p id="result" style="font-size:16px;margin-top:20px;white-space:pre-wrap;"></p>
 <video id="v" autoplay playsinline muted style="width:100%;max-width:300px;margin-top:10px;"></video>
 <script>
@@ -11,7 +11,14 @@ async function testCam() {
   const result = document.getElementById('result');
   result.textContent = 'Requesting...';
   try {
-    const stream = await navigator.mediaDevices.getUserMedia({ video: { facingMode: 'environment' } });
+    const stream = await navigator.mediaDevices.getUserMedia({
+      video: {
+        width: { ideal: 720 },
+        height: { ideal: 1280 },
+        facingMode: 'environment',
+      },
+      audio: false,
+    });
     document.getElementById('v').srcObject = stream;
     const track = stream.getVideoTracks()[0];
     result.textContent = 'WORKED\n' + JSON.stringify(track.getSettings(), null, 2);
