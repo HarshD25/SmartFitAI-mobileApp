@@ -270,16 +270,12 @@ export async function startCamera(videoEl, overlayCtx, onCapture, facingMode = c
   });
 
   try {
-    const stream = await navigator.mediaDevices.getUserMedia({
-      video: {
-        width: { ideal: 720 },
-        height: { ideal: 1280 },
-        facingMode: currentFacingMode,
-      },
-      audio: false,
+    camUtil = new Camera(videoEl, {
+      onFrame: async () => { if (pose) await pose.send({ image: videoEl }); },
+      facingMode: currentFacingMode,
+      width: 720,
+      height: 1280,
     });
-    videoEl.srcObject = stream;
-    camUtil = new Camera(videoEl, { onFrame: async () => { if (pose) await pose.send({ image: videoEl }); } });
     await camUtil.start();
     scanning = true; stableFrames = 0; frameBuffer = []; attempts = 0; lastState = '';
     setStatusAndSpeak('Looking for you…', 'Stand back so your full body is in the outline', 'start');
