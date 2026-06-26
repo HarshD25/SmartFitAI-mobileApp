@@ -192,7 +192,17 @@ export async function initScan() {
   pose.setOptions({ modelComplexity: 1, smoothLandmarks: true, minDetectionConfidence: 0.55, minTrackingConfidence: 0.55 });
 }
 
-export async function startCamera(videoEl, overlayCtx, onCapture) {
+let currentFacingMode = 'environment';
+let currentOnCapture = null;
+let currentVideoEl = null;
+let currentOverlayCtx = null;
+
+export async function startCamera(videoEl, overlayCtx, onCapture, facingMode = currentFacingMode) {
+  currentFacingMode = facingMode;
+  currentOnCapture = onCapture;
+  currentVideoEl = videoEl;
+  currentOverlayCtx = overlayCtx;
+
   if (!pose) await initScan();
   pose.onResults(results => {
     try {
@@ -260,7 +270,7 @@ export async function startCamera(videoEl, overlayCtx, onCapture) {
   });
 
   try {
-    const stream = await navigator.mediaDevices.getUserMedia({ video: { width: 720, height: 1280, facingMode: 'user' }, audio: false });
+    const stream = await navigator.mediaDevices.getUserMedia({ video: { width: 720, height: 1280, facingMode: currentFacingMode }, audio: false });
     videoEl.srcObject = stream;
     camUtil = new Camera(videoEl, { onFrame: async () => { if (pose) await pose.send({ image: videoEl }); }, width: 720, height: 1280 });
     await camUtil.start();
@@ -290,4 +300,23 @@ export function stopCamera(videoEl) {
   stableFrames = 0;
   frameBuffer = [];
   attempts = 0;
+}
+
+/**
+ * Switch between front ('user') and back ('environment') camera
+ * mid-scan. The back camera is the default (better quality, lets a
+ * friend hold the phone and frame a full-body shot properly), but the
+ * front camera is genuinely useful for a solo scan since it's the
+ * only way to see the ghost guide and skeleton overlay on yourself
+ * while positioning. Re-running startCamera with the stored callback
+ * and elements re-establishes the pose handler and stream cleanly,
+ * rather than trying to mutate the existing stream's track in place
+ * (switching facingMode on a live track isn't reliably supported
+ * across browsers, where a fresh getUserMedia call is).
+ */
+export async function switchCamera() {
+  if (!currentVideoEl || !currentOnCapture) return;
+  const nextMode = currentFacingMode === 'environment' ? 'user' : 'environment';
+  stopCamera(currentVideoEl);
+  await startCamera(currentVideoEl, currentOverlayCtx, currentOnCapture, nextMode);
 }

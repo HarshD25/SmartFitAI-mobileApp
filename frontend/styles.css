@@ -433,6 +433,24 @@ button { font-family: inherit; }
   width: max-content;
 }
 
+.camera-flip-btn {
+  position: absolute;
+  top: 14px; right: 14px;
+  z-index: 8;
+  width: 36px; height: 36px;
+  border-radius: 50%;
+  border: none;
+  background: rgba(45,42,110,0.55);
+  color: var(--cream);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: background .15s ease, transform .15s ease;
+}
+.camera-flip-btn:hover { background: var(--coral); }
+.camera-flip-btn:active { transform: scale(0.92); }
+
 .small-note {
   font-size: 12px;
   font-weight: 500;

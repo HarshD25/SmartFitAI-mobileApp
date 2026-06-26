@@ -21,6 +21,7 @@ const brandEl = document.getElementById('brand');
 const getStartedBtn = document.getElementById('getStartedBtn');
 const nextToCameraBtn = document.getElementById('nextToCamera');
 const cancelScanBtn = document.getElementById('cancelScan');
+const flipCameraBtn = document.getElementById('flipCamera');
 const scanAgainBtn = document.getElementById('scanAgain');
 const goHomeBtn = document.getElementById('goHome');
 
@@ -110,6 +111,10 @@ nextToCameraBtn.addEventListener('click', async ()=>{
 cancelScanBtn.addEventListener('click', ()=>{
   ScanEngine.stopCamera(cameraEl);
   showStep(1);
+});
+
+flipCameraBtn.addEventListener('click', async ()=>{
+  await ScanEngine.switchCamera();
 });
 
 scanAgainBtn.addEventListener('click', async ()=>{
