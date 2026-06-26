@@ -270,17 +270,32 @@ export async function startCamera(videoEl, overlayCtx, onCapture, facingMode = c
   });
 
   try {
-    const stream = await navigator.mediaDevices.getUserMedia({ video: { width: 720, height: 1280, facingMode: currentFacingMode }, audio: false });
+    const stream = await navigator.mediaDevices.getUserMedia({
+      video: {
+        width: { ideal: 720 },
+        height: { ideal: 1280 },
+        facingMode: currentFacingMode,
+      },
+      audio: false,
+    });
     videoEl.srcObject = stream;
-    camUtil = new Camera(videoEl, { onFrame: async () => { if (pose) await pose.send({ image: videoEl }); }, width: 720, height: 1280 });
+    camUtil = new Camera(videoEl, { onFrame: async () => { if (pose) await pose.send({ image: videoEl }); } });
     await camUtil.start();
     scanning = true; stableFrames = 0; frameBuffer = []; attempts = 0; lastState = '';
     setStatusAndSpeak('Looking for you…', 'Stand back so your full body is in the outline', 'start');
     Voice.speak('Starting camera. Please stand facing the camera and keep your full body inside the guide.');
   } catch (err) {
     console.error('camera start error', err);
-    setStatusAndSpeak('Can\'t reach the camera', 'Check your browser permissions and try again', 'camera_error');
-    Voice.speak('Please allow camera access in your browser.');
+    if (err && (err.name === 'NotAllowedError' || err.name === 'PermissionDeniedError')) {
+      setStatusAndSpeak('Camera permission needed', 'Allow camera access when your browser asks, then try again', 'camera_error');
+      Voice.speak('Please allow camera access to continue.');
+    } else if (err && (err.name === 'NotReadableError' || err.name === 'TrackStartError')) {
+      setStatusAndSpeak('Camera busy or unavailable', 'Close other apps using the camera, or try flipping cameras', 'camera_error');
+      Voice.speak('The camera could not be started. It may be in use by another app.');
+    } else {
+      setStatusAndSpeak('Can\'t reach the camera', 'Check your browser permissions and try again', 'camera_error');
+      Voice.speak('Please allow camera access in your browser.');
+    }
   }
 }
 
